@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "Roman",
+    "password": "qwerty_1",
+    "database": "Nedviga",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "Roman",
+    "password": "qwerty_1",
+    "database": "Nedviga",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "Roman",
+    "password": "qwerty_1",
+    "database": "Nedviga",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

@@ -17,16 +17,16 @@ export default function Home() {
         <div className="px-4  sm:flex sm:px-4 sm:-ml-2  sm:pb-8">
  
    { [...Array(4)].map((_, index) => 
- <div >
- <Propertycard/> 
+ <div>
+ <Propertycard 
+  src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"  /> 
  </div>
  ) }
       
   
 
     </div>
-    </div>
-  
+    </div>  
         </main> 
         </div>
 </div>     
