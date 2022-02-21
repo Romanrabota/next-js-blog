@@ -5,9 +5,9 @@ const { QueryTypes } = require(`sequelize`);
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const Users = await queryInterface.sequelize.query("SELECT * FROM Users WHERE role = 'User'", { type: QueryTypes.SELECT });
-   // const id = await queryInterface.sequelize.query("SELECT 'id_user' FROM Users WHERE role = 'User'", { type: QueryTypes.SELECT });
-
+    const Property = await queryInterface.sequelize.query("SELECT * FROM properties", { type: QueryTypes.SELECT });
+    const Users = await queryInterface.sequelize.query("SELECT * FROM users WHERE role = 'User'", { type: QueryTypes.SELECT });
+ //  console.log(Users.userId);
     let ReviewData=[];
     let amountReview = 10;
   
@@ -15,10 +15,11 @@ module.exports = {
   for (let j = 0; j < amountReview; j++)
   {
     ReviewData.push(
-      { 
-        user_id:Users[i].userId,
-        text:faker.datatype.string(),
-        mark:faker.datatype.number(),
+      {        
+        feedback:faker.lorem.sentences(),
+        rate:faker.datatype.number(),
+        propertyId:Property[i].propertyId,
+        userId:Users[i].userId,
         createdAt: Date.now(),
         updatedAt: Date.now()
       }
@@ -26,7 +27,7 @@ module.exports = {
   }
 }
 
-  return queryInterface.bulkInsert('Reviews', ReviewData, {}); 
+  return queryInterface.bulkInsert('reviews', ReviewData, {}); 
     /**
      * Add seed commands here.
      *
@@ -39,7 +40,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Reviews', null, {})    
+    await queryInterface.bulkDelete('reviews', null, {})    
     /**
      * Add commands to revert seed here.
      *

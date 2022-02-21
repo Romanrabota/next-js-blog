@@ -11,8 +11,8 @@ module.exports = {
   
   usersData.push(
     {
-      first_name: "Admin",
-      last_name: "Admin",
+      firstName: "Admin",
+      lastName: "Admin",
       role: "Admin",
       email: "admin",
       password: "Admin",
@@ -25,19 +25,19 @@ module.exports = {
   {
     usersData.push(
       {
-        first_name: faker.name.firstName(),
-        last_name: faker.name.lastName(),
+        firstName:faker.name.firstName(),
+        lastName: faker.name.lastName(),
         role: "User",
         email: faker.internet.email(),
-        password: faker.internet.password(),
-        picture:  faker.image.avatar(),
+        password:faker.internet.password(),
+        picture: faker.image.avatar(),
         createdAt: Date.now(),
         updatedAt: Date.now()
       }
     );
   }
 
-  return queryInterface.bulkInsert('Users', usersData, {});
+  return queryInterface.bulkInsert('users', usersData, {});
   
     /**
     * Add seed commands here.
@@ -51,7 +51,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Users', null, {})
+    await queryInterface.bulkDelete('users', null, {})
 
 
     /**
