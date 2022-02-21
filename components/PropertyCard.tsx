@@ -6,7 +6,7 @@ export default function Propertycard(props) {
                 <img className=" top:0px; bottom:0px; right:0px; left:0px;   rounded-lg  shadow-md  object-cover h-full w-full"  src={props.picture}  alt=""/>                 
             </div>
                 <div className="relative  px-4 -mt-16 "> 
-                <div className="bg-white rounded-lg  px-4  py-4  shadow-lg">       
+                <div className="bg-white rounded-lg  px-4  py-4   shadow-lg">       
                     <span className="inline-block px-2 py-1 leading-none bg-teal-200 text-teal-800 rounded-full font-semibold uppercase tracking-wide  text-xs  ">Plus</span>        
                         <div className="ml-2 text-xs  text-gray-600 font-semibold uppercase tracking-wide   overflow-hidden  max-h-12" >
                             {props.description} 
