@@ -23,6 +23,7 @@ app.prepare().then(() => {
   server.use(cookieParser());
   server.use(bodyParser.json({limit:'10mb'}));
   server.use(bodyParser.urlencoded({ extended: false }));
+//  server.use(express.json({limit:'1mb'})); // я добавил
   
   server.use(scopePerRequest(container));
   const files = 'controllers/**/*.ts';

@@ -33,7 +33,7 @@ export default class Home extends React.Component {
             <div className="overflow-y-scroll ...">
               <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
                 {this.state.property?.map((item, index) =>
-                  <Link href='/property/[id]' as={'/property/' + item.propertyId}>
+                  <Link key={'property' + item?.propertyId} href='/property/[id]' as={'/property/' + item.propertyId}>
                     <a>
                       <Propertycard
                         propertyName={item?.propertyName || 'name'}
