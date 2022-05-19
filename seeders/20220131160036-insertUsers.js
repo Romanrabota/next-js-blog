@@ -30,7 +30,7 @@ module.exports = {
         role: "User",
         email: faker.internet.email(),
         password:faker.internet.password(),
-        picture: faker.image.avatar(),
+        picture: "https://i.pravatar.cc/100",
         createdAt: Date.now(),
         updatedAt: Date.now()
       }

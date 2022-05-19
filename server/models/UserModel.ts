@@ -3,6 +3,7 @@ import {Model, DataTypes,BuildOptions} from 'sequelize';
 import  {IContextContainer} from '../container';  //?
 
 import { ROLE } from '../../commons';
+import bcrypt from "bcrypt";
 
 
 export  interface IUser extends Model {
@@ -11,6 +12,7 @@ export  interface IUser extends Model {
     lastName: string;
     email: string;
     password: string;
+    token:string;
     role: string;
     // token: string;
     picture: string;
@@ -36,7 +38,8 @@ export default (ctx: IContextContainer) => {
         },
         firstName: {
             type: DataTypes.STRING,
-            allowNull: false,
+            defaultValue: 'userofsite',
+            allowNull: true,
             validate: {
                 len: {
                 args: [6, 255],
@@ -46,7 +49,8 @@ export default (ctx: IContextContainer) => {
         },
         lastName: {
             type: DataTypes.STRING,
-            allowNull: false,
+            defaultValue: 'userofsite',
+            allowNull: true,
             validate: {
                 len: {
                     args: [6, 255],
@@ -78,12 +82,13 @@ export default (ctx: IContextContainer) => {
                 }
             }
         },
-        // token: {
-        //     type: DataTypes.STRING,
-        //     allowNull: true,
-        //     unique: true,
-        // },
+         token: {
+             type: DataTypes.STRING,
+             allowNull: true,
+             unique: true,
+         },
         role: {
+            allowNull: true,
             type: DataTypes.STRING,
             defaultValue: ROLE.GUEST,
         },
@@ -93,13 +98,26 @@ export default (ctx: IContextContainer) => {
             defaultValue: null,
         },
         createdAt: {
-            allowNull: false,
-            type: DataTypes.DATE,
+            allowNull: true,
+            type: DataTypes.BIGINT,
         },
         updatedAt: {
-            allowNull: false,
-            type: DataTypes.DATE,
+            allowNull: true,
+            type: DataTypes.BIGINT,
+    
         },
+    },{timestamps: false});
+
+    User.beforeSave(async User => {
+        try {
+            if (User.changed('password')) {
+                const salt = await bcrypt.genSalt(10);
+                const hash = await bcrypt.hash(User.password, salt);
+                User.password = hash;
+            }
+        } catch (err) {
+            throw new Error(err);
+        }
     });
 
 

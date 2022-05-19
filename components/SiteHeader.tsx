@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link'
 
 export default function Header({ className }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -61,6 +62,8 @@ export default function Header({ className }) {
             <a href="#" className="block px-3  py-1  rounded  font-semibold text-white  hover:bg-gray-800 sm:text-sm sm:px-2 xl:text-gray-900">List your property</a>
             <a href="#" className="mt-1  block px-3  py-1  rounded   font-semibold text-white  hover:bg-gray-800 sm:mt-0  xl:text-gray-900">Trips</a>
             <a href="#" className="mt-1  block px-3  py-1  rounded  font-semibold  text-white  hover:bg-gray-800 sm:mt-0   xl:text-gray-900 ">Messages</a>
+            <div className="mt-1  block px-3  py-1  rounded  font-semibold  text-white  hover:bg-gray-800 sm:mt-0   xl:text-gray-900 "  >  <Link href="/register"><a>Register</a></Link> </div> 
+            <div className="mt-1  block px-3  py-1  rounded  font-semibold  text-white  hover:bg-gray-800 sm:mt-0   xl:text-gray-900 "  >  <Link href="/login"><a>Log In</a></Link> </div>
           </div>
           <div className="px-5 py-5  sm:py-0  sm:ml-4 sm:px-0">
             <div className="flex items-center">

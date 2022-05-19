@@ -45,5 +45,5 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ]
+, "components/counter.js", "components/clock.js", "components/page.js", "src/redux/store.ts", "src/redux/reducer.ts", "src/redux/actions.ts", "src/redux/saga.ts", "src/api/authApi.js"  ]
 }

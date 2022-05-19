@@ -8,13 +8,13 @@ interface ILayoutProps {
 }
 
 
-function Layout(props: ILayoutProps) {
+function Layoutreg(props: ILayoutProps) {
     const {children, className } = props;
     return (
         <div id="app" className=" min-h-screen  bg-gray-200 antialiased xl:flex  xl:flex-col  xl:h-screen">
-            <Header className="xl:flex-shrink-0"/> 
+           {/* <Header className="xl:flex-shrink-0"/> */}
             <div className="xl:flex-1  xl:flex xl:overflow-y-hidden">
-                <Filters/> 
+        
 
                 <main className="py-6  xl:flex-1  xl:overflow-x-hidden">
 
@@ -29,4 +29,4 @@ function Layout(props: ILayoutProps) {
     );
 }
 
-export default Layout;
+export default Layoutreg;

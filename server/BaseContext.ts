@@ -28,3 +28,12 @@ export default class BaseContext {
         }
     }
 }
+
+declare global {
+    namespace Express {
+        interface Response {
+            answer: (data: any, message?: any, status?: number, /*code?: ResCode*/) => void;
+        }
+ 
+    }
+}

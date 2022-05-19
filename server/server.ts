@@ -1,4 +1,4 @@
-import express from 'express'
+import express,{ NextFunction, Request, Response } from 'express'
 import next from 'next'
 
 import bodyParser from 'body-parser';
@@ -10,7 +10,18 @@ import userRoute from './routes/UserRoutes'
 import PropertyRoute from './routes/PropertyRoutes'
 import ReviewRoute from  './routes/ReviewRoutes' 
 import container from './container';
+import httpStatus from '../http-status'
+//import { PassportStatic } from 'passport';
 
+
+
+
+
+
+
+
+
+const passport = container.resolve('passport')
 const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -19,11 +30,14 @@ const handle = app.getRequestHandler()
 app.prepare().then(() => {
   const server = express()
 
+
+  server.use(passport.initialize());
   server.use(compression());
   server.use(cookieParser());
   server.use(bodyParser.json({limit:'10mb'}));
   server.use(bodyParser.urlencoded({ extended: false }));
 //  server.use(express.json({limit:'1mb'})); // я добавил
+  server.use(answer);
   
   server.use(scopePerRequest(container));
   const files = 'controllers/**/*.ts';
@@ -46,7 +60,23 @@ app.prepare().then(() => {
 })
 
 
+const answer=(req: Request, res: Response, next: NextFunction) =>{
+  res.answer = (
+      data: any,
+      message: any = null, 
+      status: number = httpStatus.OK,
+     // code: ResCode = ResCode.TOAST
+      ) => {
+          return res.status(status).json({
+              data,
+              message,
+             // code,
+              error: status === httpStatus.OK? false: true
+          });
+      };
 
+  next();
+}
 
 
 

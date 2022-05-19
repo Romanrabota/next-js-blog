@@ -3,12 +3,12 @@ if (typeof document !== 'undefined') {
 }
 
 module.exports = {
-    baseUrl: 'http://localhost:3000',
+   
 
     db: {
         username: 'Roman',
         password: 'qwerty_1',
-        database: 'Nedviga',
+        database: 'nedviga',
         host: 'localhost',
         dialect: 'mysql',
         logging: false,

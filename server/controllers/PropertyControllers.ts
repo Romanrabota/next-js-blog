@@ -1,6 +1,7 @@
 import { route, GET, POST } from 'awilix-express'
 import { NextFunction, Request, Response } from "express";
 import BaseContext from '../BaseContext';
+import httpStatus from '../../http-status';
 
 
 @route('/api/properties')
@@ -10,26 +11,34 @@ export default class PropertyController extends BaseContext {
     @route('/all') //Get all property
     getAllUsers(req: Request, res: Response) {
       const { PropertyService } = this.di;
-        return  PropertyService.getAllProperty().then(properties=> {
-            return res.json(properties);
-          });
-    }
-
-
+      return  PropertyService.getAllProperty().then(properties=> {
+      return res.answer(properties);
+      }).catch(e=>{
+      return res.answer(null,'error', httpStatus.BAD_REQUEST);             
+      });
+      };
+              
     @POST()
-    @route('/edit/:id') //Get all users
+    @route('/edit') //Get all users
     editUser(req: Request, res: Response) {   
     	const { PropertyService } = this.di;
-		const id = req.params.id;
-		
-		console.log('property id', id);
-		
-		return  PropertyService.getUserReviewbyPropertyid(id)
-		.then(properties=> {
-			return res.json(properties);
-		});
-      
-    }  
+		  const id = req.body.id;
+		 //  console.log('property id', id);
+		  return  PropertyService.getUserReviewbyPropertyid(id)
+		  .then(properties=> {
+    //   console.log('propsu',properties)
+			return res.answer(properties);
+		  }).
+      catch(e=>{
+       return res.answer(null,'error', httpStatus.BAD_REQUEST);             
+    });
+}
+
+
+
+
+
+
 
 
 
@@ -42,7 +51,8 @@ export default class PropertyController extends BaseContext {
       const id = req.params.id;
         
       return  PropertyService.getReviewPropertybyUserid(id).then(properties=> {
-        return res.json(properties);
+        console.log('properties',properties)
+        return res.answer(properties);
         });      
     }
 }

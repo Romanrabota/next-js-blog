@@ -11,7 +11,7 @@ export default function Propertycard(props) {
                         <div className="ml-2 text-xs  text-gray-600 font-semibold uppercase tracking-wide   overflow-hidden  max-h-12" >
                             {props.description} 
                             </div>        
-            <h4 className="mt-1   text-gray-900 font-semibold text-lg  " > {props.propertyName} </h4>                  
+            <h4 className="mt-1   text-gray-900 font-semibold text-lg "> {props.propertyName} </h4>                  
                 <div className="mt-1"> 
                     <span  className="text-gray-900">${props.price}</span> <span>/wk</span>
                     <span className="m1-1 text-sm text-gray-600">/wk</span>  

@@ -3,25 +3,22 @@ import Filters from 'components/SearchFilters';
 import Propertycard from 'components/PropertyCard';
 import idcard from 'pages/property/[id]';
 import React from "react";
+import { useRouter } from 'next/router'
+import {xRead} from 'src/entity';
+import { HTTP_METHOD } from 'commons';
+import wrapper from 'src/redux/store'
+import { fetchAllProperties } from 'src/redux/actions'
+import { connect } from 'react-redux'
+
+
 
 import Link from 'next/link'
 import Layout from 'components/Layout';
 
-export default class Home extends React.Component {
-  state = {
-    property: null
-
-  };
+function Propert({ pro }) {
+  const router = useRouter();
   
-  async componentDidMount() {
-    const url = "http://localhost:3000/api/properties/all";
-    const response = await fetch(url);
-    const data = await response.json();
-    this.setState({ property: data })
-  }
-
-
-  render() {
+    
     return (
       <Layout>
         <div className="px-4">
@@ -32,7 +29,7 @@ export default class Home extends React.Component {
           <div className="px-4  sm:flex sm:px-4 sm:-ml-2  sm:pb-8">
             <div className="overflow-y-scroll ...">
               <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
-                {this.state.property?.map((item, index) =>
+                {pro?.map((item, index) =>
                   <Link key={'property' + item?.propertyId} href='/property/[id]' as={'/property/' + item.propertyId}>
                     <a>
                       <Propertycard
@@ -53,6 +50,66 @@ export default class Home extends React.Component {
       </Layout>
     )
   }
+  
+/*Propert.getInitialProps = async (ctx) => {
+  console.log("???jsdghsdlgflsdhgskdjhgjsdhgjsdhgksj");
+  const  {query} = ctx;
+  //const res = await fetch('http://localhost:3000/api/properties/all')
+  const json = await xRead('/properties/all', HTTP_METHOD.GET);
+  //const json = await res.json()
+  //return { pro: json.response};
+  console.log('pro',json);
+   return { pro: json.response.data};
+};*/
+  
+  /*Propert.getInitialProps =  wrapper.getServerSideProps(
+    (store) =>  ({ req })=>             
+          store.dispatch(fetchAllProperties()); 
+          console.log('pro',pro)        
+  );*/
 
-}
+  Propert.getInitialProps = wrapper.getInitialPageProps(store => () => {
+    console.log('2. Page.getInitialProps uses the store to dispatch things');
+    store.dispatch({
+      type: 'FETCH_ALL_PROPERTIES',
+      //payload: 'was set in error page ' + pathname,
+    });
+  });
+
+
+/* Propert.getInitialProps = wrapper.getInitialAppProps(store => {
+    console.log('2. Page.getInitialProps uses the store to dispatch things');
+    store.dispatch({
+      type: 'FETCH_ALL_PROPERTIES',
+      //payload: 'was set in error page ' + pathname,
+    });
+  });
+*/
+
+
+
+  /*const  getServerSideProp =  wrapper.getServerSideProps(
+    (store) => async ({ req })=>             
+          await store.dispatch(fetchAllProperties())          
+  );*/
+
+  const mapStateToProps = (store: any) => {
+    const { properties } = store;
+ //   console.log('pro', properties)
+    return {
+     pro:properties
+    };
+  };
+
+  const connectedPage = connect(mapStateToProps)(Propert);
+
+  export default connectedPage;
+
+
+
+
+
+//export default Propert
+
+
 

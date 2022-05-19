@@ -12,6 +12,7 @@ module.exports = {
         email varchar(45) NOT NULL,
         picture varchar(300) DEFAULT NULL,
         role enum('Admin','User','Guest') NOT NULL DEFAULT 'Guest',
+        token varchar(255) DEFAULT NULL,
         createdAt bigint(20) DEFAULT NULL,
         updatedAt bigint(20) DEFAULT NULL,
         PRIMARY KEY (userId),

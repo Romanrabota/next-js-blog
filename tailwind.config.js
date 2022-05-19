@@ -92,6 +92,7 @@ module.exports = {
       14: '3.5rem',
       16: '4rem',
       20: '5rem',
+      22: '5.5rem',
       24: '6rem',
       28: '7rem',
       32: '8rem',
@@ -104,8 +105,20 @@ module.exports = {
       60: '15rem',
       64: '16rem',
       72: '18rem',
-      80: '20rem',
+      80: '20rem', 
       96: '24rem',
+      120: '30rem',
+      140: '35rem',
+      152: '38rem',
+      153: '39rem',
+      160: '40rem',
+      164: '41rem',
+      168: '42rem',
+      192: '48rem',
+      200: '52rem',
+      212: '55rem',
+      272: '70rem',
+
     },
     animation: {
       none: 'none',
@@ -232,6 +245,7 @@ module.exports = {
     container: {},
     content: {
       none: 'none',
+      center: true,
     },
     cursor: {
       auto: 'auto',

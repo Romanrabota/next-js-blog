@@ -1,68 +1,144 @@
-// import Propertycard from 'components/PropertyCard'
+import Comentitem from 'components/Coment';
 import { useRouter } from 'next/router'
 import Layout from 'components/Layout';
 import React, {useState, useEffect } from "react";
 import { response } from 'express';
+import ReviewService from 'server/services/ReviewService';
+import {xRead} from 'src/entity';
+import { HTTP_METHOD } from 'commons';
+import wrapper from 'src/redux/store'
+import { connect } from 'react-redux'
 
 
-function Property(props) {
+function Property({ prop }) {
   const router = useRouter();
-  console.log('property ID  1111111 = ', router.query.id);
-  const  id = router.query.id;
-  const options ={ method:'POST', headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}, body: JSON.stringify({})};
-
-  const [property,setProperty] = useState(null);
   
-  useEffect(() => {
+return ( 
+  /*<div>proba</div>*/
+  // <div>Property: {prop}</div>
 
-      const loadProperty = async()=>{
-
-         const response = await fetch('http://localhost:3000/api/properties/edit/'+id,options) 
-          
-      //  const response = await fetch('http://localhost:3000/api/properties/edit/'+id) 
-
-
-          console.log('zahodit');
-
-          const json = await response.json(); 
-          
-          console.log('jhjhjh', json);
-        
-          setProperty(json);
-      }
-      
-      loadProperty();
-  });
-
-  console.log('property-2', property);
-  
- return (
-
-  <Layout>      
-      <h1>lalala</h1>
-      { router.query.id}
-   
-        <div>
-
-        <img className=" top:0px; bottom:0px; right:0px; left:px;   rounded-lg  shadow-md  object-center "  src="https://i2.au.reastatic.net/1000x750-format=webp/30b6a81efb47855ca9c41925043c1a53c7e8eb7a8280c1ca52a25b6fde6e6938/main.jpg"  width="500" height="600"  alt=""/> 
-
-
+<Layout>      
+<div className="container mx-auto">         
+  <div className="flex flex-wrap justify-center">
+    <img className="object-position: center"src={prop.picture}  width="400px"  alt=""/>        
+  </div>       
+   <div className="flex  justify-center  text-black  text-4xl font-black">{prop.propertyName}</div>
+   <div className="text-4xl font-medium  w-80 object-position: center">{prop.price} $</div>
+  <div className="flex justify-between ...">
+    <div className=" rounded h-40 w-80"> {prop.description} 
+    </div>
+   <div className="flow-root shadow-md bg-white  rounded  h-40 w-40">
+      <div className="flex justify-center ...">
+        <div className="flex flex-col space-y-2...">
+          <div>
+            <img className="rounded-full ..."  src={prop.user.picture}   alt=""/>    
+          </div>
+          <div className="font-bold">
+          {prop.user.firstName} {prop.user.lastName} 
+          </div>
+        <div className="flex justify-center ...   font-light">Manager</div>
         </div>
-
-       
-     
-
-
+        </div> 
+        </div>
+  </div>
 
 
+{prop.reviews?.map((item, index) =>
 
+<Comentitem
+lastname={prop.user.lastName} 
+name={prop.user.firstName} 
+picture={prop.user.picture}
+description={item?.feedback}
+/>
+)}
 
-
-
-  </Layout>
-
+</div>
+ </Layout> 
 );
+}
 
+
+
+
+/*Property.getInitialProps = async (ctx) => {
+  console.log("???jsdghsdlgflsdhgskdjhgjsdhgjsdhgksj");
+  const  {query} = ctx; 
+  const json = await xRead('/properties/edit',{id:query.id}, HTTP_METHOD.POST);
+ // const json = await xRead('/properties/edit/'+ query.id,HTTP_METHOD.POST);
+  console.log('propertydata',json);
+  return { prop: json.response.data};
+};*/
+
+
+
+/*Propert.getInitialProps = wrapper.getInitialPageProps(store => () => {
+  console.log('2. Page.getInitialProps uses the store to dispatch things');
+  store.dispatch({
+    type: 'FETCH_ALL_PROPERTIES',
+    //payload: 'was set in error page ' + pathname,
+  });
+});*/
+
+
+ Property.getInitialProps = wrapper.getInitialPageProps(store => (ctx) => {
+  console.log('2.dispatch id');
+  const  {query} = ctx; 
+  store.dispatch({
+    type: 'FETCH_ID_PROPERTIES',
+    //payload:{id:query.id,name:'test'},
+    payload:{id:query.id},    
+ });
+});
+
+
+
+const mapStateToProps = (store: any) => {
+  const { properties } = store;
+  console.log('prop', properties)
+  return {
+   prop:properties
+  };
 };
 
-export default Property
+
+
+/*const mapDispatchToProps = (dispatch,ctx) => {
+  const {id} = ctx;
+  return {
+      updateTask: (data, id) => dispatch(TaskActionCreators.updateTaskRequest(data, id=ctx)),
+  }
+}*/
+
+
+
+const connectedPageid = connect(mapStateToProps)(Property);
+console.log('connectedPageid',connectedPageid);
+
+export default connectedPageid;
+
+
+ //export default   Property;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+ 
+
+
+
+
+
+
